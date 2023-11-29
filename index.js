@@ -9,7 +9,6 @@ async function scrapeProducts(url) {
   });
   const page = await browser.newPage();
 
-  // Изменение User-Agent
   await page.setUserAgent(
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
   );
@@ -19,9 +18,6 @@ async function scrapeProducts(url) {
 
   try {
     await page.goto(url, { waitUntil: 'networkidle2' });
-
-    // Имитация поведения человека
-    await page.waitForTimeout(5000);
 
     const products = await page.evaluate(() => {
       let items = [];
@@ -34,10 +30,6 @@ async function scrapeProducts(url) {
       });
       return items;
     });
-
-    console.log(products); // Проверка извлеченных данных
-
-    // Здесь добавьте код для сохранения данных в CSV
   } catch (error) {
     console.error('Ошибка при скрапинге данных:', error);
   } finally {
@@ -45,6 +37,5 @@ async function scrapeProducts(url) {
   }
 }
 
-// URL категории с сайта DNS-shop.ru
 const url = 'https://www.dns-shop.ru/catalog/17a8d26216404e77/vstraivaemye-xolodilniki/';
 scrapeProducts(url);
